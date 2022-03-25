@@ -21,9 +21,9 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var viewBa: UIView!
     @IBOutlet weak var lbl1: UILabel!
-    @IBOutlet weak var lbl2: UILabel!
-    @IBOutlet weak var btn: UIButton!
-    var isLogIN = false
+    @IBOutlet weak var lbl2: UIButton!
+    @IBOutlet weak var signUp: UIButton!
+    var isLogIN = true
     
     
     override func viewDidLoad() {
@@ -31,9 +31,12 @@ class ViewController: UIViewController {
         
         getData()
         collectionApps.reloadData()
+        //pageController.delegate = self
         
         if isLogIN {
             viewBa.backgroundColor = .red
+            lbl1.text = "Hi"
+            lbl2.titleLabel?.text = "Hi"
         }else{
             viewBa.backgroundColor = .yellow
         }
@@ -116,10 +119,13 @@ class ViewController: UIViewController {
 
 
 
-extension ViewController: UIScrollViewDelegate {
+extension ViewController: UIScrollViewDelegate, UIPageViewControllerDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let page = scrollView.contentOffset.x/scrollView.frame.width
         pageController.currentPage = Int(page)
+        if Int(page) == 2 {
+            pageController.currentPage = 0
+        }
     }
 }
 
@@ -135,6 +141,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CityCVC", for: indexPath) as! CityCVC
         cell.nameC.text = citys[indexPath.row].name
         cell.imageC.sd_setImage(with: URL(string: citys[indexPath.row].imageURL))
+        cell.imageC.layer.cornerRadius = 23
         return cell
     }
     

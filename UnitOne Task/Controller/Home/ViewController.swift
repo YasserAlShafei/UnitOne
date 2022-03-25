@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import SDWebImage
+import FirebaseAuth
 
 
 
@@ -33,12 +34,14 @@ class ViewController: UIViewController {
         collectionApps.reloadData()
         //pageController.delegate = self
         
-        if isLogIN {
+        if Auth.auth().currentUser == nil {
             viewBa.backgroundColor = .red
             lbl1.text = "Hi"
             lbl2.titleLabel?.text = "Hi"
+
         }else{
             viewBa.backgroundColor = .yellow
+
         }
         
     }
